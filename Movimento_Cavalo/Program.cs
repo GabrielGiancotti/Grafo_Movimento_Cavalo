@@ -115,8 +115,9 @@ class Movimento_Cavalo
         }
         int[] PosInicio = { movlinhain, movcolunain };
         int[] PosFim = { movlinhafim, movcolunafim };
-        
-        Console.WriteLine(MovimentoMinimoChegada(PosInicio, PosFim, tamanho_tabuleiro));
+
+        Console.Write("A quantidade de movimentos é: ");
+        Console.Write(MovimentoMinimoChegada(PosInicio, PosFim, tamanho_tabuleiro));
         
         Console.ReadKey();
     }
