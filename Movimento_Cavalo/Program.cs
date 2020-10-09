@@ -18,19 +18,17 @@ class Movimento_Cavalo
     static bool VerificarDentro(int x, int y, int N)
     {
         if (x >= 1 && x <= N && y >= 1 && y <= N)
-            return true;      
-            return false;
+            return true;
+        return false;
     }
 
-    static int MovimentoMinimoChegada(int[] PosIn,
-                                    int[] PosFim, int Tam)
+    static int MovimentoMinimoChegada(int[] PosIn, int[] PosFim, int Tam)
     {
         int[] movlinha = { -2, -1, 1, 2, -2, -1, 1, 2 };
         int[] movcoluna = { -1, -2, -2, -1, 1, 2, 2, 1 };
 
         Queue<movimento> fila = new Queue<movimento>();
-        fila.Enqueue(new movimento(PosIn[0],
-                           PosIn[1], 0));
+        fila.Enqueue(new movimento(PosIn[0], PosIn[1], 0));
 
         movimento t;
         int x, y;
@@ -40,30 +38,30 @@ class Movimento_Cavalo
             for (int j = 1; j <= Tam; j++)
                 visit[i, j] = false;
 
-            visit[PosIn[0], PosIn[1]] = true;
+        visit[PosIn[0], PosIn[1]] = true;
 
-            while (fila.Count != 0)
+        while (fila.Count != 0)
+        {
+            t = fila.Peek();
+            fila.Dequeue();
+
+            if (t.x == PosFim[0] && t.y == PosFim[1])
+                return t.dis;
+
+            for (int i = 0; i < 8; i++)
             {
-                t = fila.Peek();
-                fila.Dequeue();
+                x = t.x + movlinha[i];
+                y = t.y + movcoluna[i];
 
-                if (t.x == PosFim[0] && t.y == PosFim[1])
-                    return t.dis;
-
-                for (int i = 0; i < 8; i++)
+                if (VerificarDentro(x, y, Tam) && !visit[x, y])
                 {
-                    x = t.x + movlinha[i];
-                    y = t.y + movcoluna[i];
-
-                    if (VerificarDentro(x, y, Tam) && !visit[x, y])
-                    {
-                        visit[x, y] = true;
-                        fila.Enqueue(new movimento(x, y, t.dis + 1));
-                    }
+                    visit[x, y] = true;
+                    fila.Enqueue(new movimento(x, y, t.dis + 1));
                 }
             }
-            return int.MaxValue;
-        }        
+        }
+        return int.MaxValue;
+    }
 
     public static void Main(String[] args)
     {
@@ -71,7 +69,7 @@ class Movimento_Cavalo
 
         Console.WriteLine("Digite o movimento inicial do cavalo(Linha): ");
         movlinhain = int.Parse(Console.ReadLine());
-        if (movlinhain >=1 && movlinhain <= tamanho_tabuleiro)
+        if (movlinhain >= 1 && movlinhain <= tamanho_tabuleiro)
         {
             Console.Clear();
         }
@@ -118,7 +116,7 @@ class Movimento_Cavalo
 
         Console.Write("A quantidade de movimentos é: ");
         Console.Write(MovimentoMinimoChegada(PosInicio, PosFim, tamanho_tabuleiro));
-        
+
         Console.ReadKey();
     }
 }
